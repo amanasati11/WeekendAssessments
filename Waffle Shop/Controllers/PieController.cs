@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Waffle_Shop.Models;
 using Waffle_Shop.ViewModel;
 
@@ -19,12 +20,21 @@ namespace Waffle_Shop.Controllers
             this.mapper = mapper;
         }
         [Authorize]
-        public IActionResult List()
+        public async Task<ViewResult> List()
         {
+            IEnumerable<Pie> pies = new List<Pie>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllPies"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
+                }
+            }
             ViewBag.CurrentCategory = "Cheese Waffles";
 
             // Got the Pie Data
-            var pies = pieRepository.AllPies;
+            /*var pies = pieRepository.AllPies;*/
             PieListViewModel pieListViewModel = new PieListViewModel();
             pieListViewModel.Pies = pies;
             pieListViewModel.CurrentCategory = "Cheese Cake";
@@ -44,11 +54,22 @@ namespace Waffle_Shop.Controllers
                 
             return View(pie);
         }
-        public ViewResult PiesOfTheWeek()
+        public async Task<ViewResult> PiesOfTheWeek()
         {
+            /*IEnumerable<Pie> pies = new List<Pie>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/PieOfTheWeek"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
+                }
+            }*/
             var pie = pieRepository.PiesOfTheWeek;
             return View(pie);
-
+            /*PieListViewModel pieListViewModel = new PieListViewModel();
+            pieListViewModel.Pies = pies;
+            return View(pieListViewModel);*/
         }
     }
 }

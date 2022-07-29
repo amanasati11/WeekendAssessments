@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Waffle Shop", "Waffle Shop\Waffle Shop.csproj", "{95D7EAE7-7871-4D66-B5A5-B2A35EE5B6DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PieAPI", "PieAPI\PieAPI.csproj", "{AD9DD90F-744A-41F9-9239-2BC7B3A32F47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{95D7EAE7-7871-4D66-B5A5-B2A35EE5B6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95D7EAE7-7871-4D66-B5A5-B2A35EE5B6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95D7EAE7-7871-4D66-B5A5-B2A35EE5B6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD9DD90F-744A-41F9-9239-2BC7B3A32F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD9DD90F-744A-41F9-9239-2BC7B3A32F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD9DD90F-744A-41F9-9239-2BC7B3A32F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD9DD90F-744A-41F9-9239-2BC7B3A32F47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
