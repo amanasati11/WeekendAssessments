@@ -19,6 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<App
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPieRepository, PieRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
