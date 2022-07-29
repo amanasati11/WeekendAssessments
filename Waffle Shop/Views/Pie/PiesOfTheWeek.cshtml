@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Waffle_Shop.Models.Pie>
+
+    <h1>Pies of the Week!</h1>
+    @foreach (var pie in Model)
+    {
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <img src="@pie.ImageThumbnailUrl">
+                    <div class="caption">
+                        <h3 class="pull-right">Rs.@pie.Price</h3>
+                        <h3>
+                            <a asp-controller="Pie" asp-action="Details" asp-route-id="@pie.PieId" >@pie.Name</a>
+                        </h3>
+                        <h5> Catagory: @pie.Category.CategoryName</h5>
+                        <p>@pie.ShortDescription</p>
+                    </div>
+               
+                </div>
+            </div>
+    }
