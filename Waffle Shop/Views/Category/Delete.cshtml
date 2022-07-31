@@ -27,7 +27,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="CategoryId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" asp-action="RemoveCategory" value="Delete" class="btn btn-danger" /> |
         <a asp-controller="Category" asp-action="AllCategory" class="btn btn-primary">Back to List</a>
     </form>
 </div>

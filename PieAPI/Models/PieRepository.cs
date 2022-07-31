@@ -2,6 +2,7 @@
 
 namespace PieAPI.Models
 {
+
     public class PieRepository : IPieRepository
     {
         private readonly AppDbContext appDbContext;
@@ -9,14 +10,36 @@ namespace PieAPI.Models
         {
             this.appDbContext = appDbContext;
         }
-        public IEnumerable<Pie> AllPies => appDbContext.Pies.Include(c => c.Category);
+        public IEnumerable<Pie> AllPies => appDbContext.Pies;
 
         public IEnumerable<Pie> PiesOfTheWeek => appDbContext.Pies.Where(pie => pie.IsPieOfTheWeek).Include(c => c.Category);
 
-
-        public Pie GetPieById(int pieId)
+        public Pie DeletePie(int pieID)
         {
-            return AllPies.FirstOrDefault(p => p.PieId == pieId);
+            var DeletePie = AllPies.FirstOrDefault(pie => pie.PieId == pieID);
+            var entry = this.appDbContext.Pies.Remove(DeletePie);
+            this.appDbContext.SaveChanges();
+            return entry.Entity;
+        }
+
+        /*public Pie GetPieById(int pieId)
+        {
+            var PieId =  appDbContext.Pies.FirstOrDefault(p => p.PieId == pieId);
+            return PieId;
+        }*/
+
+        public Pie InsertPie(Pie pie)
+        {
+            var PieInsert = this.appDbContext.Pies.Add(pie);
+            this.appDbContext.SaveChanges();
+            return PieInsert.Entity;
+        }
+
+        public Pie UpdatePie(Pie pie)
+        {
+            var UpdatedPie = this.appDbContext.Pies.Update(pie);
+            this.appDbContext.SaveChanges();
+            return UpdatedPie.Entity;
         }
     }
 }
