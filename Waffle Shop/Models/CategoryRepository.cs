@@ -2,6 +2,7 @@
 {
     public class CategoryRepository : ICategoryRepository
     {
+
         public IEnumerable<Category> AllCategories =>
              new List<Category>
              {
