@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Waffle_Shop.Models;
 
 namespace Waffle_Shop.Controllers
@@ -6,85 +8,111 @@ namespace Waffle_Shop.Controllers
     public class PieCrudController : Controller
     {
         private readonly IPieRepository pieRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public PieCrudController(IPieRepository pieRepository)
+        public PieCrudController(IPieRepository pieRepository, ICategoryRepository categoryRepository)
         {
             // Object of PieRepository class
             this.pieRepository = pieRepository;
+            this.categoryRepository = categoryRepository;
         }
 
-        public IActionResult AllPies()
+        /*public IActionResult AllPies()
         {
             var AllPies = pieRepository.AllPies;
             return View(AllPies);
-        }
+        }*/
 
+        public async Task<ViewResult> AllPies()
+        {
+            IEnumerable<Pie> pies = new List<Pie>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllPies"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
+                }
+            }
+            return View(pies);
+        }
         public IActionResult Create()
         {
+            //application - you have to change this one to get it from API
+            var categories = this.categoryRepository.AllCategories;
+            List<SelectListItem> categoryItems = new List<SelectListItem>();
+            foreach (var category in categories)
+            {
+                categoryItems.Add(new SelectListItem { Text = category.CategoryName, Value = category.CategoryId.ToString() });
+            }
+
+            ViewBag.categoryItems = categoryItems;
             return View();
         }
-        
-        [HttpPost]
         public async Task<IActionResult> CreateNewPie(Pie pie)
         {
-            int result = pieRepository.CreatePie(pie);
-            return RedirectToAction("AllPies");
-            /*using (var httpClient = new HttpClient())
+            using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsJsonAsync("https://localhost:7287/api/Pie/InsertCategory", category))
+                using (var response = await httpClient.PostAsJsonAsync("https://localhost:7287/api/Pie/InsertPie", pie))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllPies");
         }
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-
-            var PieFromDb = pieRepository
-                .AllPies
-                .FirstOrDefault(u => u.PieId == id);
-            return View(PieFromDb);
+            var pie = new Pie();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pie = JsonConvert.DeserializeObject<Pie>(apiResponse);
+                }
+            }
+            return View(pie);
         }
-        [HttpPost]
         public async Task<IActionResult> UpdatePie(Pie pie)
         {
-
-
-            pieRepository.UpdatePie(pie);
-            return RedirectToAction("AllCategory");
-            /*using (var httpClient = new HttpClient())
+            /*pieRepository.UpdatePie(pie);
+            return RedirectToAction("AllCategory");*/
+            using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PutAsJsonAsync("https://localhost:7287/api/Pie/UpdateCategory", category))
+                using (var response = await httpClient.PutAsJsonAsync("https://localhost:7287/api/Pie/UpdatePie", pie))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllPies");
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-
-            var pieFromDb = pieRepository
-                .AllPies
-                .FirstOrDefault(u => u.PieId == id);
-            return View(pieFromDb);
+            var pie = new Pie();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pie = JsonConvert.DeserializeObject<Pie>(apiResponse);
+                }
+            }
+            return View(pie);
         }
-        [HttpPost]
         public async Task<IActionResult> RemovePie(int pieId)
         {
-            /*var id = categoryId;*/
-            var pie = pieRepository.AllPies.FirstOrDefault(u => u.PieId == pieId);
+            var id = pieId;
+            /*var pie = pieRepository.AllPies.FirstOrDefault(u => u.PieId == pieId);
             pieRepository.RemovePie(pie);
-            return RedirectToAction("AllCategory");
-            /*using (var httpClient = new HttpClient())
+            return RedirectToAction("AllCategory");*/
+            using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.DeleteAsync("https://localhost:7287/api/Pie/DeleteCategory?categoryID=" + id))
+                using (var response = await httpClient.DeleteAsync("https://localhost:7287/api/Pie/DeletePie?pieID=" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllPies");
         }
     }
 }

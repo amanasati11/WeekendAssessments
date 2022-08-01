@@ -70,7 +70,8 @@ namespace PieAPI.Controllers
                 var NewPie = this
                                 .pieRepository
                                 .InsertPie(pie);
-                return CreatedAtRoute("GetPieID", new { NewPie.PieId }, NewPie);
+                return Ok(NewPie);
+                /*return CreatedAtRoute("GetPieID", new { NewPie.PieId }, NewPie);*/
             }
             catch (Exception)
             {
@@ -151,7 +152,8 @@ namespace PieAPI.Controllers
                 var InsertCategory = this
                                 .categoryRepository
                                 .InsertCategory(category);
-                return CreatedAtRoute("GetCategory", new { id = InsertCategory.CategoryId }, InsertCategory);
+                return Ok(InsertCategory);
+                /*return CreatedAtRoute("GetCategory", new { id = InsertCategory.CategoryId }, InsertCategory);*/
             }
             catch (Exception)
             {

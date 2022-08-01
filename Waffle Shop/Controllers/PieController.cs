@@ -56,7 +56,7 @@ namespace Waffle_Shop.Controllers
         }
         public async Task<ViewResult> PiesOfTheWeek()
         {
-            /*IEnumerable<Pie> pies = new List<Pie>();
+            IEnumerable<Pie> pies = new List<Pie>();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/PieOfTheWeek"))
@@ -64,12 +64,12 @@ namespace Waffle_Shop.Controllers
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
                 }
-            }*/
-            var pie = pieRepository.PiesOfTheWeek;
-            return View(pie);
-            /*PieListViewModel pieListViewModel = new PieListViewModel();
+            }
+            /*var pie = pieRepository.PiesOfTheWeek;
+            return View(pie);*/
+            PieListViewModel pieListViewModel = new PieListViewModel();
             pieListViewModel.Pies = pies;
-            return View(pieListViewModel);*/
+            return View(pies);
         }
     }
 }

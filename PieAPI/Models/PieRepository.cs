@@ -10,7 +10,7 @@ namespace PieAPI.Models
         {
             this.appDbContext = appDbContext;
         }
-        public IEnumerable<Pie> AllPies => appDbContext.Pies;
+        public IEnumerable<Pie> AllPies => appDbContext.Pies.Include(c=> c.Category);
 
         public IEnumerable<Pie> PiesOfTheWeek => appDbContext.Pies.Where(pie => pie.IsPieOfTheWeek).Include(c => c.Category);
 
