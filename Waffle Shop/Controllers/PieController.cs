@@ -47,11 +47,21 @@ namespace Waffle_Shop.Controllers
             //return View(pieMini);
         }
         [Authorize]
-        public ViewResult Details(int id)                        // action method
+        public async Task<IActionResult> Details(int id)                        // action method
         {
-            var pie = pieRepository
+            /*var pie = pieRepository
                 .GetPieById(id);
                 
+            return View(pie);*/
+            var pie = new Pie();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pie = JsonConvert.DeserializeObject<Pie>(apiResponse);
+                }
+            }
             return View(pie);
         }
         public async Task<ViewResult> PiesOfTheWeek()

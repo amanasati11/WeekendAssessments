@@ -82,7 +82,7 @@
                    asp-route-pieId="@Model.PieId">DELETE PIE FROM LIST</a>*@
 
 
-    <form asp-action="RemovePie" asp-route-pieId="@Model.Name" method="post">
+    <form asp-action="RemovePie" asp-route-pieId="@Model.PieId" method="post">
         <input type="hidden" asp-for="PieId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-controller="PieCrud" asp-action="AllPies" >Back to List</a>

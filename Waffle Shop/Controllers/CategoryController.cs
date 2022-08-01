@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Waffle_Shop.Models;
 using Waffle_Shop.ViewModel;
 
 namespace Waffle_Shop.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository categoryRepository;
@@ -19,33 +21,17 @@ namespace Waffle_Shop.Controllers
             return View(category);
         }
 
-        /*public async Task<IActionResult> AllCategory()
-        {
-            IEnumerable<Category> category = new List<Category>();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllCategories"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    category = JsonConvert.DeserializeObject<IEnumerable<Category>>(apiResponse);
-                }
-            }
-            CategoryListViewModel model = new CategoryListViewModel();
-            model.categories = category;
-            return View(model);
-        }*/
-
-        // Get Action Method
         public IActionResult Create()
         {
             return View();
         }
         // Post Action Method
-        [HttpPost]
+        
         public async Task<IActionResult> CreateCategory(Category category)
         {
             int result = categoryRepository.CreateCategory(category);
             return RedirectToAction("AllCategory");
+
             /*using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsJsonAsync("https://localhost:7287/api/Pie/InsertCategory", category))
@@ -56,14 +42,24 @@ namespace Waffle_Shop.Controllers
             return RedirectToAction("AllCategory");*/
         }
 
-        // Get Action Method
-        public IActionResult Edit(int id)
+        
+        public async Task<IActionResult> Edit(int id)
         {
-            
+            /*var category = new Category();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetCategory?id=" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    category = JsonConvert.DeserializeObject<Category>(apiResponse);
+                }
+            }
+            return View(category);*/
+
             var categoryFromDb = categoryRepository
                 .AllCategories
                 .FirstOrDefault(u => u.CategoryId == id);
-            
+
             return View(categoryFromDb);
         }
         [HttpPost]

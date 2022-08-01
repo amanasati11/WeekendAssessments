@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Waffle_Shop.Models;
 
 namespace Waffle_Shop.Controllers
 {
+    [Authorize]
     public class PieCrudController : Controller
     {
         private readonly IPieRepository pieRepository;
@@ -75,8 +77,6 @@ namespace Waffle_Shop.Controllers
         }
         public async Task<IActionResult> UpdatePie(Pie pie)
         {
-            /*pieRepository.UpdatePie(pie);
-            return RedirectToAction("AllCategory");*/
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PutAsJsonAsync("https://localhost:7287/api/Pie/UpdatePie", pie))
@@ -102,9 +102,6 @@ namespace Waffle_Shop.Controllers
         public async Task<IActionResult> RemovePie(int pieId)
         {
             var id = pieId;
-            /*var pie = pieRepository.AllPies.FirstOrDefault(u => u.PieId == pieId);
-            pieRepository.RemovePie(pie);
-            return RedirectToAction("AllCategory");*/
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.DeleteAsync("https://localhost:7287/api/Pie/DeletePie?pieID=" + id))

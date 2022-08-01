@@ -21,13 +21,6 @@ namespace PieAPI.Models
             this.appDbContext.SaveChanges();
             return entry.Entity;
         }
-
-        /*public Pie GetPieById(int pieId)
-        {
-            var PieId =  appDbContext.Pies.FirstOrDefault(p => p.PieId == pieId);
-            return PieId;
-        }*/
-
         public Pie InsertPie(Pie pie)
         {
             var PieInsert = this.appDbContext.Pies.Add(pie);
