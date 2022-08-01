@@ -58,6 +58,9 @@
                     <input class="form-check-input" asp-for="InStock" /> @Html.DisplayNameFor(model => model.InStock)
                 </label>
             </div>
+            @*<div class="form-group">
+                <select asp-for="CategoryId" asp-items="@ViewBag.categoryItems"></select>
+            </div>*@
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <input asp-for="CategoryId" class ="form-control" />

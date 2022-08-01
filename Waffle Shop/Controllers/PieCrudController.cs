@@ -38,7 +38,7 @@ namespace Waffle_Shop.Controllers
             }
             return View(pies);
         }
-        public IActionResult Create()
+        /*public IActionResult Create()
         {
             //application - you have to change this one to get it from API
             var categories = this.categoryRepository.AllCategories;
@@ -48,6 +48,26 @@ namespace Waffle_Shop.Controllers
                 categoryItems.Add(new SelectListItem { Text = category.CategoryName, Value = category.CategoryId.ToString() });
             }
 
+            ViewBag.categoryItems = categoryItems;
+            return View();
+        }*/
+        public async Task<IActionResult> Create()
+        {
+            //application - you have to change this one to get it from API
+            IEnumerable<Category> categories = new List<Category>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllCategories"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(apiResponse);
+                }
+            }
+            List<SelectListItem> categoryItems = new List<SelectListItem>();
+            foreach (var category in categories)
+            {
+                categoryItems.Add(new SelectListItem { Text = category.CategoryName, Value = category.CategoryId.ToString() });
+            }
             ViewBag.categoryItems = categoryItems;
             return View();
         }
