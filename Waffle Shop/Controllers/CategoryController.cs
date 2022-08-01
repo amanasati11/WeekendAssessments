@@ -15,10 +15,21 @@ namespace Waffle_Shop.Controllers
             this.categoryRepository = categoryRepository;
         }
 
-        public IActionResult AllCategory()
+        public async Task<IActionResult> AllCategory()
         {
-            var category = categoryRepository.AllCategories;
-            return View(category);
+            /*var category = categoryRepository.AllCategories;
+            return View(category);*/
+
+            IEnumerable<Category> categories = new List<Category>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllCategories"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(apiResponse);
+                }
+            }
+            return View(categories);
         }
 
         public IActionResult Create()
@@ -29,23 +40,23 @@ namespace Waffle_Shop.Controllers
         
         public async Task<IActionResult> CreateCategory(Category category)
         {
-            int result = categoryRepository.CreateCategory(category);
-            return RedirectToAction("AllCategory");
+            /*int result = categoryRepository.CreateCategory(category);
+            return RedirectToAction("AllCategory");*/
 
-            /*using (var httpClient = new HttpClient())
+            using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PostAsJsonAsync("https://localhost:7287/api/Pie/InsertCategory", category))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllCategory");
         }
 
         
         public async Task<IActionResult> Edit(int id)
         {
-            /*var category = new Category();
+            var category = new Category();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetCategory?id=" + id))
@@ -54,54 +65,64 @@ namespace Waffle_Shop.Controllers
                     category = JsonConvert.DeserializeObject<Category>(apiResponse);
                 }
             }
-            return View(category);*/
+            return View(category);
 
-            var categoryFromDb = categoryRepository
+            /*var categoryFromDb = categoryRepository
                 .AllCategories
                 .FirstOrDefault(u => u.CategoryId == id);
 
-            return View(categoryFromDb);
+            return View(categoryFromDb);*/
         }
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(Category category)
         {
 
 
-            categoryRepository.UpdateCategory(category);
-            return RedirectToAction("AllCategory");
-            /*using (var httpClient = new HttpClient())
+            /*categoryRepository.UpdateCategory(category);
+            return RedirectToAction("AllCategory");*/
+            using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.PutAsJsonAsync("https://localhost:7287/api/Pie/UpdateCategory", category))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllCategory");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            
-            var categoryFromDb = categoryRepository
+
+            var category = new Category();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetCategory?id=" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    category = JsonConvert.DeserializeObject<Category>(apiResponse);
+                }
+            }
+            return View(category);
+            /*var categoryFromDb = categoryRepository
                 .AllCategories
                 .FirstOrDefault(u => u.CategoryId == id);          
-            return View(categoryFromDb);
+            return View(categoryFromDb);*/
         }
         [HttpPost]
         public async Task<IActionResult> RemoveCategory(int categoryId)
         {
             /*var id = categoryId;*/
-            var student = categoryRepository.AllCategories.FirstOrDefault(student => student.CategoryId == categoryId);
+            /*var student = categoryRepository.AllCategories.FirstOrDefault(student => student.CategoryId == categoryId);
             categoryRepository.RemoveCategory(student);
-            return RedirectToAction("AllCategory");
-            /*using (var httpClient = new HttpClient())
+            return RedirectToAction("AllCategory");*/
+            using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.DeleteAsync("https://localhost:7287/api/Pie/DeleteCategory?categoryID=" + id))
+                using (var response = await httpClient.DeleteAsync("https://localhost:7287/api/Pie/DeleteCategory?categoryID=" + categoryId))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
             }
-            return RedirectToAction("AllCategory");*/
+            return RedirectToAction("AllCategory");
         }
     }
 }
