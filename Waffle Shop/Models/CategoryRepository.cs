@@ -10,19 +10,19 @@
 
         public IEnumerable<Category> AllCategories => appDbContext.Categories;
 
-        public int CreateStudent(Category category)
+        public int CreateCategory(Category category)
         {
             appDbContext.Categories.Add(category);
             return appDbContext.SaveChanges();
         }
 
-        public int RemoveStudent(Category category)
+        public int RemoveCategory(Category category)
         {
             appDbContext.Categories.Remove(category);
             return appDbContext.SaveChanges();
         }
 
-        public int UpdateStudent(Category category)
+        public int UpdateCategory(Category category)
         {
             appDbContext.Categories.Update(category);
             return appDbContext.SaveChanges();

@@ -44,7 +44,7 @@ namespace Waffle_Shop.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(Category category)
         {
-            int result = categoryRepository.CreateStudent(category);
+            int result = categoryRepository.CreateCategory(category);
             return RedirectToAction("AllCategory");
             /*using (var httpClient = new HttpClient())
             {
@@ -71,7 +71,7 @@ namespace Waffle_Shop.Controllers
         {
 
 
-            categoryRepository.UpdateStudent(category);
+            categoryRepository.UpdateCategory(category);
             return RedirectToAction("AllCategory");
             /*using (var httpClient = new HttpClient())
             {
@@ -96,7 +96,7 @@ namespace Waffle_Shop.Controllers
         {
             /*var id = categoryId;*/
             var student = categoryRepository.AllCategories.FirstOrDefault(student => student.CategoryId == categoryId);
-            categoryRepository.RemoveStudent(student);
+            categoryRepository.RemoveCategory(student);
             return RedirectToAction("AllCategory");
             /*using (var httpClient = new HttpClient())
             {
