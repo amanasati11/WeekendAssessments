@@ -20,9 +20,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<App
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPieRepository, PieRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddRazorPages();
+builder.Services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
+builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+// Above this line all are services
+// Below this line all are Middleware Components
 
 var app = builder.Build();
 
@@ -38,6 +44,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 

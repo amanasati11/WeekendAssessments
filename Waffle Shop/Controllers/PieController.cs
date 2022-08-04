@@ -22,19 +22,19 @@ namespace Waffle_Shop.Controllers
         [Authorize]
         public async Task<ViewResult> List()
         {
-            IEnumerable<Pie> pies = new List<Pie>();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllPies"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
-                }
-            }
-            ViewBag.CurrentCategory = "Cheese Waffles";
+            //IEnumerable<Pie> pies = new List<Pie>();
+            //using (var httpClient = new HttpClient())
+            //{
+            //    using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/GetAllPies"))
+            //    {
+            //        string apiResponse = await response.Content.ReadAsStringAsync();
+            //        pies = JsonConvert.DeserializeObject<IEnumerable<Pie>>(apiResponse);
+            //    }
+            //}
+            //ViewBag.CurrentCategory = "Cheese Waffles";
 
             // Got the Pie Data
-            /*var pies = pieRepository.AllPies;*/
+            var pies = pieRepository.AllPies;
             PieListViewModel pieListViewModel = new PieListViewModel();
             pieListViewModel.Pies = pies;
             pieListViewModel.CurrentCategory = "Cheese Cake";
@@ -49,11 +49,11 @@ namespace Waffle_Shop.Controllers
         [Authorize]
         public async Task<IActionResult> Details(int id)                        // action method
         {
-            /*var pie = pieRepository
+            var pie = pieRepository
                 .GetPieById(id);
-                
-            return View(pie);*/
-            var pie = new Pie();
+
+            return View(pie);
+            /*var pie = new Pie();
             using (var httpClient = new HttpClient())
             {
                 using (var response = await httpClient.GetAsync("https://localhost:7287/api/Pie/" + id))
@@ -62,7 +62,7 @@ namespace Waffle_Shop.Controllers
                     pie = JsonConvert.DeserializeObject<Pie>(apiResponse);
                 }
             }
-            return View(pie);
+            return View(pie);*/
         }
         public async Task<ViewResult> PiesOfTheWeek()
         {
