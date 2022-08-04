@@ -73,14 +73,14 @@
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <input type="submit" asp-action="UpdatePie" value="Save" class="btn btn-primary" />
+                <input type="submit" asp-action="UpdatePie" value="Save" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="PieCrud" asp-action="AllPies">Back to List</a>
+    <a asp-controller="PieCrud" asp-action="AllPies" class="btn btn-primary">Back to List</a>
 </div>
 
 @section Scripts {

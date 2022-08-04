@@ -11,12 +11,14 @@ namespace Waffle_Shop.Controllers
     {
         private readonly IPieRepository pieRepository;
         private readonly ICategoryRepository categoryRepository;
+        private readonly IConfiguration configuration;
 
-        public PieCrudController(IPieRepository pieRepository, ICategoryRepository categoryRepository)
+        public PieCrudController(IPieRepository pieRepository, ICategoryRepository categoryRepository, IConfiguration configuration)
         {
             // Object of PieRepository class
             this.pieRepository = pieRepository;
             this.categoryRepository = categoryRepository;
+            this.configuration = configuration;
         }
 
         /*public IActionResult AllPies()

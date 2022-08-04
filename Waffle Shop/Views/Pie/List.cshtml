@@ -4,7 +4,7 @@
 @*<h1>@Model.CurrentCategory</h1>*@
 <h1>List Of All The Pies!</h1>
 
-@foreach (var pie in Model.Pies)
+@*@foreach (var pie in Model.Pies)
 {
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
@@ -16,6 +16,32 @@
 
                 </h3>
                 <p>@pie.ShortDescription</p>
+            </div>
+        </div>
+    </div>
+}*@
+
+@*<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>*@
+
+@foreach (var pie in Model.Pies)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="thumbnail">
+            <img src="@pie.ImageThumbnailUrl" alt="" class="card-img-top embed-responsive-item">
+            <div class="caption">
+                <h3 class="pull-right">@pie.Price.ToString("c")</h3>
+                <h3 class="card-title">
+                   <a asp-controller="Pie" asp-action="Details" asp-route-id="@pie.PieId" >@pie.Name</a>
+
+                </h3>
+                <p class="card-text">@pie.ShortDescription</p>
             </div>
         </div>
     </div>
