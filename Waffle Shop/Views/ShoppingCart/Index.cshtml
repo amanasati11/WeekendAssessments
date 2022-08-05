@@ -2,7 +2,10 @@
     <div class="row pt-4">
         <div class="col-6" text-end>
             <a asp-controller="ShoppingCart" asp-action="ClearCart" class="btn btn-primary">
-                <i class="bi bi-folder-plus"></i> &nbsp; Empty Cart
+                <i class="bi bi-bag-x-fill"></i> &nbsp; Empty Cart
+            </a>
+            <a asp-controller="Order" asp-action="Checkout" class="btn btn-danger">
+                <i class="bi bi-credit-card-fill"></i> &nbsp;Place Order
             </a>
         </div>
     </div>

@@ -2,6 +2,8 @@
 using Waffle_Shop.Models;
 using Waffle_Shop.ViewModel;
 
+// Contoller -> ShoppingCart.cs (Models Class) -> DbContext -> Entity FrameWork -> Database 
+
 namespace Waffle_Shop.Controllers
 {
     public class ShoppingCartController : Controller
