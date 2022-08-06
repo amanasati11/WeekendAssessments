@@ -29,6 +29,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = "547774463800101";
+    options.AppSecret = "01135d8eccc03eaf40e837571ff7ed11";
+});
 
 // Above this line all are services
 // Below this line all are Middleware Components
