@@ -18,6 +18,8 @@ namespace Waffle_Shop.Models
             _shoppingCart = shoppingCart;
         }
 
+        public IEnumerable<OrderDetail> OrderDetail => _appDbContext.OrderDetails;
+
         public void CreateOrder(Order order)
         {
             order.OrderPlaced = DateTime.Now;

@@ -41,5 +41,10 @@ namespace Waffle_Shop.Controllers
             ViewBag.CheckoutCompleteMessage = "Thanks for your order. You'll soon enjoy our delicious pies!";
             return View();
         }
+        public IActionResult OrderDetails(Order order)
+        {
+            var OrderDetails = _orderRepository.OrderDetail;
+            return View(OrderDetails);
+        }
     }
 }

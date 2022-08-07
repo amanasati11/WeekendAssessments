@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Aman Pie Shop :)</a>
+    <a class="navbar-brand" href="#">Aman Pie Shop</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,6 +30,7 @@
         <li class="nav-item">
             <a class="nav-link " asp-area="" asp-controller="Pie" asp-action="List"><i class="bi bi-pie-chart-fill"></i> List Of Pies</a>
         </li>
+        @*@await Component.InvokeAsync("CategoryMenu")*@
         <li class="nav-item">
             <a class="nav-link " asp-area="" asp-controller="Category" asp-action="AllCategory"><i class="bi bi-tags"></i> Manage Categories</a>
         </li>
@@ -37,8 +38,9 @@
             <a class="nav-link " asp-area="" asp-controller="PieCrud" asp-action="AllPies"><i class="bi bi-tags"></i> Manage Pie</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " asp-area="" asp-controller="ShoppingCart" asp-action="Index"><i class="bi bi-cart4"></i> Cart</a>
+            <a class="nav-link " asp-area="" asp-controller="ShoppingCart" asp-action="Index"><i class="bi bi-cart4"></i> Cart @await Component.InvokeAsync("ShoppingCartSummary")</a>
         </li>
+        
         <li class="nav-item">
             <partial name="_LoginPartial">
         </li>

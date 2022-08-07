@@ -12,7 +12,7 @@ namespace Waffle_Shop.Components
         }
         public IViewComponentResult Invoke()
         {
-            var categories = this.categoryRepository.AllCategories;
+            var categories = categoryRepository.AllCategories.OrderBy(c => c.CategoryName);
             return View(categories);
         }
     }

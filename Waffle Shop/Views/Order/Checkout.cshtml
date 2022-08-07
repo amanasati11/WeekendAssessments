@@ -65,7 +65,7 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" asp-controller="Order" asp-action="Checkout" value="Complete Order" class="btn btn-primary" />
+                <input type="submit" asp-controller="Order" asp-action="Checkout" value="Complete Order" class="btn btn-danger" />
             </div>
         
     </div>
@@ -73,7 +73,7 @@
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="ShoppingCart" asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>
 
 @section Scripts {
