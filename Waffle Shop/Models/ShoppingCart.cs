@@ -11,20 +11,6 @@ namespace Waffle_Shop.Models
         {
             this.db = db;
         }
-        /*public static ShoppingCart GetCart(IServiceProvider services)
-        {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
-                .HttpContext.Session;
-
-            var context = services.GetService<AppDbContext>();
-
-            string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString(); 
-            // ?? is null check, GetString check cartId already present or not 
-
-            session.SetString("CartId", cartId);
-
-            return new ShoppingCart(context) { ShoppingCartId = cartId };
-        }*/
         public static ShoppingCart GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
